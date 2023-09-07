@@ -21,6 +21,16 @@ class Banco{
         }
     }
 
+    public function listarUsuarios(){
+        try {
+            $instancia = $this->conexao->query('SELECT * FROM users');
+            $usuarios = $instancia->fetchAll(PDO::FETCH_ASSOC);
+            return $usuarios;
+        }catch (PDOException $ex){
+            echo $ex->getMessage();
+        }
+    }
+
 }//Fim da Classe
 
 ?>

@@ -11,11 +11,23 @@ class Banco{
         }
     }//Fim do construtor
 
-    public function listarPessoas(){
+    public function listarPessoas($busca){
         try {
-            $instancia = $this->conexao->query('SELECT * FROM pessoas');
+            $instancia = $this->conexao->
+            query('SELECT * FROM pessoas WHERE nome LIKE "%'.$busca.'%" ORDER BY id DESC');
             $pessoas = $instancia->fetchAll(PDO::FETCH_ASSOC);
             return $pessoas;
+        }catch (PDOException $ex){
+            echo $ex->getMessage();
+        }
+    }
+
+    public function pegarPessoa($id){
+        try {
+            $instancia = $this->conexao->
+            query('SELECT * FROM pessoas WHERE id = '.$id);
+            $pessoas = $instancia->fetchAll(PDO::FETCH_ASSOC);
+            return $pessoas[0];
         }catch (PDOException $ex){
             echo $ex->getMessage();
         }
@@ -28,6 +40,39 @@ class Banco{
             return $usuarios;
         }catch (PDOException $ex){
             echo $ex->getMessage();
+        }
+    }
+
+    public function cadastrarPessoa($nome, $email){
+        try{
+            $intancia = $this->conexao
+                ->prepare("INSERT INTO pessoas (nome, email) VALUES (:nome, :email)");
+            $intancia->bindParam(':nome',$nome);
+            $intancia->bindParam(':email', $email);
+            $intancia->execute();
+        }catch (PDOException $ex){
+            echo $ex->getMessage();
+        }
+    }#
+    public function excluirPessoa($id){
+        try{
+            $instancia = $this->conexao->prepare("DELETE FROM pessoas WHERE id = :id");
+            $instancia->bindParam(':id', $id);
+            $instancia->execute();
+        }catch (PDOException $ex){
+            $ex->getMessage();
+        }
+    }
+
+    public function editarPessoa($id, $nome, $email){
+        try{
+            $instancia = $this->conexao->prepare("UPDATE pessoas SET nome = :nome, email = :email WHERE id = :id");
+            $instancia->bindParam(':nome', $nome);
+            $instancia->bindParam(':email', $email);
+            $instancia->bindParam(':id', $id);
+            $instancia->execute();
+        }catch (PDOException $ex){
+            $ex->getMessage();
         }
     }
 

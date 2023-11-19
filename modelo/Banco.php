@@ -1,6 +1,7 @@
 <?php
 
 class Banco{
+
     private $conexao;
 
     public function __construct(){
@@ -17,6 +18,17 @@ class Banco{
             query('SELECT * FROM pessoas WHERE nome LIKE "%'.$busca.'%" ORDER BY id DESC');
             $pessoas = $instancia->fetchAll(PDO::FETCH_ASSOC);
             return $pessoas;
+        }catch (PDOException $ex){
+            echo $ex->getMessage();
+        }
+    }
+
+    public function pegarContatos($id){
+        try {
+            $instancia = $this->conexao->
+            query('SELECT * FROM contatos WHERE pessoas_id = '.$id);
+            $contatos = $instancia->fetchAll(PDO::FETCH_ASSOC);
+            return $contatos;
         }catch (PDOException $ex){
             echo $ex->getMessage();
         }
@@ -53,7 +65,21 @@ class Banco{
         }catch (PDOException $ex){
             echo $ex->getMessage();
         }
-    }#
+    }
+
+    public function cadastrarContato($telefone, $id){
+        try{
+            $intancia = $this->conexao
+                ->prepare("INSERT INTO contatos (telefone, pessoas_id) VALUES (:telefone, :pessoas_id)");
+            $intancia->bindParam(':telefone',$telefone);
+            $intancia->bindParam(':pessoas_id', $id);
+            $intancia->execute();
+
+        }catch (PDOException $ex){
+            echo $ex->getMessage();
+        }
+    }
+
     public function excluirPessoa($id){
         try{
             $instancia = $this->conexao->prepare("DELETE FROM pessoas WHERE id = :id");
@@ -61,6 +87,16 @@ class Banco{
             $instancia->execute();
         }catch (PDOException $ex){
             $ex->getMessage();
+        }
+    }
+
+    public function excluirContato($id){
+        try{
+            $instancia = $this->conexao->prepare("DELETE FROM contatos WHERE id = :id");
+            $instancia->bindParam(':id', $id);
+            $instancia->execute();
+        }catch (PDOException $ex){
+            echo $ex->getMessage();
         }
     }
 

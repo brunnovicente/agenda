@@ -27,7 +27,9 @@
     <div class="container p-3 shadow mx-auto">
         <!-- MENU -->
         <?php include('barra.php')?>
-
+        <p class="text-end mt-2">
+            <a href="/app/principal.php" class="btn btn-sm btn-outline-dark"><i class="fas fa-chevron-circle-left"></i> Voltar</a>
+        </p>
         <form method="post" action="editar.php">
             <label>ID</label>
             <input class="form-control w-25" type="text" hidden="hidden" name="id" value = "<?php echo $pessoa['id'];?>">

@@ -51,10 +51,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <i class="fa-solid fa-bars"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Contatos</a></li>
+                            <li><a class="dropdown-item" href="contatos.php?id=<?php echo $pessoa['id'];?>">Contatos</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="editar.php?id=<?php echo $pessoa['id'] ?>">Editar</a></li>
-                            <li><button class="dropdown-item" onclick="excluir(<?php echo $pessoa['id'] ?>)">Excluir</button></li>
+                            <li><a class="dropdown-item" href="editar.php?id=<?php echo $pessoa['id']; ?>">Editar</a></li>
+                            <li><button class="dropdown-item" onclick="excluir(<?php echo $pessoa['id']; ?>)">Excluir</button></li>
                         </ul>
                     </div>
                 </td>

@@ -23,7 +23,9 @@
     <div class="container p-3 shadow mx-auto">
         <!-- MENU -->
         <?php include('barra.php')?>
-
+        <p class="text-end mt-2">
+            <a href="/app/principal.php" class="btn btn-sm btn-outline-dark"><i class="fas fa-chevron-circle-left"></i> Voltar</a>
+        </p>
         <form method="post" action="cadastrar.php">
             <label class="form-label">NOME</label>
             <input class="form-control" type="text" name="nome">
